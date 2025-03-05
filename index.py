@@ -11,7 +11,6 @@ import traceback
 
 app = FastAPI()
 PORT = 3000
-
 proxies = [
     'http://183.240.196.55:38080',
     'http://43.129.201.43:443'
@@ -20,13 +19,14 @@ proxies = [
 def get_random_proxy():
     return random.choice(proxies)
 
+
 def get_random_code():
-    connection = psycopg2.connect(user="docker",password="taxes4omor!",host="localhost",port="5432", database="db_stat_dep")
+    connection = psycopg2.connect(user="f1090364_xtdzl1",password="stat4omor",host="141.8.193.236",port="5432",database="f1090364_xtdzl1")
     cursor = connection.cursor()
     sql_query  = 'SELECT * FROM sma_stat_dep.tbl_tax_queue ORDER BY id DESC LIMIT 1'
     cursor.execute(sql_query)
     res = cursor.fetchone()
-    print(res)
+    # print(res)
     if(res==None):
         sql_query = "INSERT INTO sma_stat_dep.tbl_tax_queue (inn_code,region_section_code,last_seven_numb,status) VALUES('035000001','03','5000001',true)"
         cursor.execute(sql_query)
@@ -55,12 +55,16 @@ def job():
         "https": proxy
     }
     try:
-        response = requests.get(f"https://andoz.tj/ForTaxpayer/getInfoByInn?inn={get_random_code()[1]}", proxies=proxies_dict)
+        try:
+            response = requests.get(f"https://andoz.tj/ForTaxpayer/getInfoByInn?inn={get_random_code()[1]}", proxies=proxies_dict)
+        except:
+            response = requests.get(f"https://andoz.tj/ForTaxpayer/getInfoByInn?inn={get_random_code()[1]}")
         if response.status_code == 200:
-            connection = psycopg2.connect(user="docker",password="taxes4omor!",host="localhost",port="5432", database="db_stat_dep")
+            # connection = psycopg2.connect(user="docker",password="taxes4omor!",host="localhost",port="5432", database="db_stat_dep")
+            connection = psycopg2.connect(user="f1090364_xtdzl1",password="stat4omor",host="141.8.193.236",port="5432",database="f1090364_xtdzl1")
             cursor = connection.cursor()
             status = 'false'
-            print(get_random_code()[1])
+            # print(get_random_code()[1])
             if(response.json().get('userInfo')!=None):
                 print(response.json().get('userInfo'))
                 person = response.json().get('userInfo')[0]
@@ -91,11 +95,12 @@ def job():
                 status = 'true'
             else:
                 status = 'false'
-            print(add_one(get_random_code()[1]))
-            region = get_random_code()[1]
-            if(get_random_code()[2]==9999999):
-                region = add_one(get_random_code()[2])
-            sql_query = f"INSERT INTO sma_stat_dep.tbl_tax_queue (inn_code,region_section_code,last_seven_numb,status) VALUES('{add_one(get_random_code()[1])}','{region}','{add_one(get_random_code()[3])}',{status})"
+            # print(add_one(get_random_code()[1]))
+            randcode = get_random_code()
+            region = randcode[2]
+            if(randcode[3]==9999999):
+                region = add_one(randcode[2])
+            sql_query = f"INSERT INTO sma_stat_dep.tbl_tax_queue (inn_code,region_section_code,last_seven_numb,status) VALUES('{add_one(randcode[1])}','{region}','{add_one(randcode[3])}',{status})"
             cursor.execute(sql_query)
             connection.commit()
             cursor.close()
