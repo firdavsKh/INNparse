@@ -68,7 +68,7 @@ def job():
                     ),
                     third_insert AS (
                         INSERT INTO sma_stat_dep.tbl_document (document_id,document_type, issuer, issue_date, upload_tstmp, status)
-                        SELECT '{person["N_Passport"]}','N_Passport','{person["PassportVidanName"]}','{person["Date_vidach"]}',CURRENT_TIMESTAMP,true
+                        SELECT '{person["N_Passport"]}','N_Passport','{cryptocode.encrypt(person["PassportVidanName"])}','{person["Date_vidach"]}',CURRENT_TIMESTAMP,true
                         FROM first_insert
                     )
                     INSERT INTO sma_stat_dep.tbl_addresses (inspection_name,inspection_code,inspection_id,address_text,address_phone,upload_tstmp)
