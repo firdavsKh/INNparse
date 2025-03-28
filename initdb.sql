@@ -20,9 +20,9 @@ CREATE TABLE sma_stat_dep.tbl_tax_id (
 CREATE TABLE sma_stat_dep.tbl_individuals (
   id SERIAL PRIMARY KEY,
   tax_id INT REFERENCES sma_stat_dep.tbl_tax_id(id),
-  fst_name VARCHAR(30), 
-  lst_name VARCHAR(30), 
-  full_name VARCHAR(60),
+  fst_name VARCHAR(255), 
+  lst_name VARCHAR(255), 
+  full_name VARCHAR(255),
   sex BOOLEAN,
   brth_date DATE,
   citizenship_1 INT,
@@ -36,7 +36,7 @@ CREATE TABLE sma_stat_dep.tbl_document (
   id SERIAL PRIMARY KEY,
   document_type VARCHAR (100),
   document_id VARCHAR (100),
-  issuer VARCHAR (100),
+  issuer VARCHAR (255),
   issue_date DATE,
   expiration_date DATE,
   upload_tstmp TIMESTAMP,
@@ -46,7 +46,7 @@ CREATE TABLE sma_stat_dep.tbl_document (
 
 CREATE TABLE sma_stat_dep.tbl_addresses (
   id SERIAL PRIMARY KEY,
-  inspection_name VARCHAR(100),
+  inspection_name VARCHAR(255),
   inspection_code INT,
   inspection_id INT,
   address_text VARCHAR(255),
@@ -74,4 +74,3 @@ CREATE TABLE sma_stat_dep.tbl_tax_queue (
   last_seven_numb VARCHAR(10),
   status BOOLEAN
 );
-
