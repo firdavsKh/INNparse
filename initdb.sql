@@ -36,7 +36,7 @@ CREATE TABLE sma_stat_dep.tbl_document (
   id SERIAL PRIMARY KEY,
   document_type VARCHAR (100),
   document_id VARCHAR (100),
-  issuer VARCHAR (100),
+  issuer VARCHAR (255),
   issue_date DATE,
   expiration_date DATE,
   upload_tstmp TIMESTAMP,
