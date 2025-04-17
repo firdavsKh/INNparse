@@ -23,7 +23,7 @@ def get_random_proxy():
 def get_random_code():
     connection = psycopg2.connect(user="f1090364_xtdzl1",password="stat4omor",host="141.8.193.236",port="5432",database="f1090364_xtdzl1")
     cursor = connection.cursor()
-    sql_query  = 'SELECT * FROM sma_stat_dep.tbl_tax_queue ORDER BY id DESC LIMIT 1'
+    sql_query  = 'SELECT * FROM sma_stat_dep.tbl_tax_queue ORDER BY inn_code DESC LIMIT 1'
     cursor.execute(sql_query)
     res = cursor.fetchone()
     if(res==None):
