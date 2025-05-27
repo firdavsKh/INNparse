@@ -1,0 +1,12 @@
+certifi==2025.4.26
+charset-normalizer==3.4.2
+cryptocode==0.1
+DateTime==5.5
+idna==3.10
+psycopg2-binary==2.9.10
+pycryptodomex==3.22.0
+pytz==2025.2
+requests==2.32.3
+schedule==1.2.2
+urllib3==2.4.0
+zope.interface==7.2

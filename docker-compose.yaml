@@ -1,25 +1,10 @@
 services:
-  # postgres
-  postgres_entities:
-    image: postgres:alpine3.19
-    # restart: always
-    #> set shared memory limit when using docker-compose<#
-    # shm_size: 128mb
-    environment:
-      # POSTGRES_DB: "db_stat_dep"
-      # POSTGRES_USER: "habrpguser"
-      POSTGRES_PASSWORD: "muni@omor!#"
-
-    #> this is also workable syntaxis: <#  
-    # volumes: ['.:/docker-entrypoint-initdb.d', 'data:/var/lib/postgresql/data'] 
-    volumes:
-      - .:/docker-entrypoint-initdb.d
-      # - ./data:/var/lib/postgresql/data
-      - data:/var/lib/postgresql/data
+  parser:
+    build: .
     ports:
-      - "5432:5432"
-volumes:
-  data: 
+      - "3000:3000"
+# volumes:
+#   data: 
 
 #
 # networks:

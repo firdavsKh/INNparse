@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 import schedule
 import time
 import requests
@@ -11,7 +10,7 @@ import traceback
 import cryptocode
 
 key = "Admin7117"
-app = FastAPI()
+
 PORT = 3000
 proxies = [
     'http://183.240.196.55:38080',
