@@ -22,7 +22,7 @@ def get_random_proxy():
 def get_random_code():
     connection = psycopg2.connect(user="f1090364_xtdzl1",password="stat4omor",host="141.8.193.236",port="5432",database="f1090364_xtdzl1")
     cursor = connection.cursor()
-    sql_query  = 'SELECT * FROM sma_stat_dep.tbl_tax_queue ORDER BY id DESC LIMIT 1'
+    sql_query  = 'SELECT * FROM sma_stat_dep.tbl_tax_queue ORDER BY inn_code DESC LIMIT 1'
     cursor.execute(sql_query)
     res = cursor.fetchone()
     if(res==None):
@@ -63,14 +63,16 @@ def job():
                     second_insert AS (
                         INSERT INTO sma_stat_dep.tbl_individuals (tax_id, fst_name, lst_name, full_name, sex, brth_date, citizenship_1, upload_tstmp)
                         SELECT first_table_id,'{cryptocode.encrypt(person["Name"],key)}','{cryptocode.encrypt(person["Fam"],key)}','{cryptocode.encrypt(person["Full_nameK"],key)}','{person["pol"]}','{person["Date_roj"]}','{person["Citizenship"]}',CURRENT_TIMESTAMP
+                        SELECT first_table_id,'{cryptocode.encrypt(person["Name"],key)}','{cryptocode.encrypt(person["Fam"],key)}','{cryptocode.encrypt(person["Full_nameK"],key)}','{person["pol"]}','{person["Date_roj"]}','{person["Citizenship"]}',CURRENT_TIMESTAMP
                         FROM first_insert
                     ),
                     third_insert AS (
                         INSERT INTO sma_stat_dep.tbl_document (document_id,document_type, issuer, issue_date, upload_tstmp, status)
-                        SELECT '{person["N_Passport"]}','N_Passport','{person["PassportVidanName"]}','{person["Date_vidach"]}',CURRENT_TIMESTAMP,true
+                        SELECT '{person["N_Passport"]}','N_Passport','{cryptocode.encrypt(person["PassportVidanName"],key)}','{person["Date_vidach"]}',CURRENT_TIMESTAMP,true
                         FROM first_insert
                     )
                     INSERT INTO sma_stat_dep.tbl_addresses (inspection_name,inspection_code,inspection_id,address_text,address_phone,upload_tstmp)
+                    SELECT '{cryptocode.encrypt(person["inspectionName"],key)}','{person["inspectionRamz"]}','{person["id_insp"]}','{cryptocode.encrypt(person["adr_txt"],key)}','{person["adr_phone"]}',CURRENT_TIMESTAMP
                     SELECT '{cryptocode.encrypt(person["inspectionName"],key)}','{person["inspectionRamz"]}','{person["id_insp"]}','{cryptocode.encrypt(person["adr_txt"],key)}','{person["adr_phone"]}',CURRENT_TIMESTAMP
                     FROM first_insert"""
                 
